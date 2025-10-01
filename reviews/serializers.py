@@ -2,7 +2,9 @@ from rest_framework import serializers
 from .models import Review
 
 class ReviewSerializer(serializers.ModelSerializer):
+    author = serializers.StringRelatedField(read_only=True)
+    
     class Meta:
         model = Review
-        fields = "__all__"
-        read_only_field = ['id', 'author', 'created_at']
+        fields = ['id', 'product', 'author', 'text', 'rating', 'created_at']
+        read_only_fields = ['id', 'author', 'created_at']
