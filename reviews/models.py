@@ -15,13 +15,17 @@ class Review(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
     text = models.TextField(blank=False)
     rating = models.IntegerField(validators=[
-        MinValueValidator(0),
+        MinValueValidator(1),
         MaxValueValidator(5)
     ])
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        unique_together = ('product', 'author')
+        ordering = ['-created_at']
+
     def __str__(self):
-        return f'review on {self.product.name} by {self.author.name}'
+        return f'review on {self.product.name} by {self.author.username}'
 
 
 
